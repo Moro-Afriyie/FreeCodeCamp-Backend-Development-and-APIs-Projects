@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const dns = require("dns");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 const urlParser = require("url");
 const app = express();
 
@@ -16,7 +17,7 @@ mongoose
 
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // create a schema
 const UrlSchema = mongoose.Schema({
@@ -37,7 +38,6 @@ app.get("/api/hello", function (req, res) {
   res.json({ greeting: "hello API" });
 });
 
-// post the url to the database
 app.post("/api/shorturl", async (req, res) => {
   const bodyUrl = req.body.url;
   dns.lookup(urlParser.parse(bodyUrl).hostname, (error, address) => {
@@ -55,7 +55,6 @@ app.post("/api/shorturl", async (req, res) => {
   });
 });
 
-// get the shortened url == id
 app.get("/api/shorturl/:id", (req, res) => {
   const id = req.params.id;
   UrlModel.findById(id, (err, data) => {

@@ -37,6 +37,24 @@ app.get("/api/hello", function (req, res) {
   res.json({ greeting: "hello API" });
 });
 
+// post the url to the database
+app.post("/api/shorturl", async (req, res) => {
+  const bodyUrl = req.body.url;
+  dns.lookup(urlParser.parse(bodyUrl).hostname, (error, address) => {
+    console.log(address);
+    if (address) {
+      const Url = new UrlModel({
+        url: req.body.url,
+      });
+      Url.save((err, data) => {
+        res.json({ original_url: data.url, short_url: data.id });
+      });
+    } else {
+      res.json({ error: "invalid url" });
+    }
+  });
+});
+
 app.listen(port, function () {
   console.log(`Listening on port ${port}`);
 });

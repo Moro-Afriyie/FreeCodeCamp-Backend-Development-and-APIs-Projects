@@ -29,19 +29,17 @@ app.get("/api/", (req, res) => {
 });
 
 app.get("/api/:date", (req, res) => {
-  app.get("/api/:date", (req, res) => {
-    let dateValue = req.params.date;
-    if (/^-?\d+$/.test(dateValue)) {
-      dateValue = parseInt(dateValue);
-    }
+  let dateValue = req.params.date;
+  if (/^-?\d+$/.test(dateValue)) {
+    dateValue = parseInt(dateValue);
+  }
 
-    const date = new Date(dateValue);
-    if (date.getTime()) {
-      res.json({ unix: date.getTime(), utc: date.toUTCString() });
-    } else {
-      res.json({ error: "Invalid Date" });
-    }
-  });
+  const date = new Date(dateValue);
+  if (date.getTime()) {
+    res.json({ unix: date.getTime(), utc: date.toUTCString() });
+  } else {
+    res.json({ error: "Invalid Date" });
+  }
 });
 
 // listen for requests :)

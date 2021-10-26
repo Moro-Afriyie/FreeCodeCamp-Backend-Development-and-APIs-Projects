@@ -55,6 +55,18 @@ app.post("/api/shorturl", async (req, res) => {
   });
 });
 
+// get the shortened url == id
+app.get("/api/shorturl/:id", (req, res) => {
+  const id = req.params.id;
+  UrlModel.findById(id, (err, data) => {
+    if (!data) {
+      res.json({ error: "invalid url" });
+    } else {
+      res.redirect(data.url);
+    }
+  });
+});
+
 app.listen(port, function () {
   console.log(`Listening on port ${port}`);
 });

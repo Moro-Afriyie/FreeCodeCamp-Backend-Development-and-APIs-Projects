@@ -1,4 +1,4 @@
-const mydbUri = process.env["DB_URI"];
+const mydbUri = process.env.DB_URI;
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
@@ -16,7 +16,15 @@ mongoose
 
 app.use(cors());
 app.use(express.json());
-app.use(urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
+
+// create a schema
+const UrlSchema = mongoose.Schema({
+  url: String,
+});
+
+// create a model
+const UrlModel = mongoose.model("url", UrlSchema);
 
 app.use("/public", express.static(`${process.cwd()}/public`));
 

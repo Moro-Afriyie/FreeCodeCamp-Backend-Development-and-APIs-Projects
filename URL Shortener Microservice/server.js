@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const dns = require("dns");
+const mongoose = require("mongoose");
 const app = express();
 
 // Basic Configuration
@@ -21,6 +22,11 @@ app.get("/", function (req, res) {
 // Your first API endpoint
 app.get("/api/hello", function (req, res) {
   res.json({ greeting: "hello API" });
+});
+
+app.post("/api/shorturl", (req, res) => {
+  console.log(req.body);
+  // console.log(dns.lookup(req.body));
 });
 
 app.listen(port, function () {

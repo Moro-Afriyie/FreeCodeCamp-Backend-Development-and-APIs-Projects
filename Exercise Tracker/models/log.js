@@ -10,9 +10,7 @@ const LogSchema = new mongoose.Schema({
       duration: Number,
       date: {
         type: Date,
-        default: () => {
-          new Date().toDateString();
-        },
+        default: Date.now(),
       },
     },
   ],

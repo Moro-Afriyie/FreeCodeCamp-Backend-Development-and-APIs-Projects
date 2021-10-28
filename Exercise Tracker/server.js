@@ -31,7 +31,6 @@ app.post("/api/users", async (req, res) => {
       username: username,
     },
     (err, data) => {
-      console.log(data);
       res.json({ username: data.username, _id: data.id });
     }
   );
@@ -55,13 +54,14 @@ app.post("/api/users/:_id/exercises", async (req, res) => {
       date: req.body.date,
     },
     (err, data) => {
-      res.json({
-        username: data.username,
-        description: data.description,
-        duration: data.duration,
-        date: data.date,
-        _id: data.userid,
-      });
+      // res.json({
+      //   username: data.username,
+      //   description: data.description,
+      //   duration: data.duration,
+      //   date: data.date,
+      //   _id: data.userid,
+      // });
+      console.log(data);
     }
   );
 });

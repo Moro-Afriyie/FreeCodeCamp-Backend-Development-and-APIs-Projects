@@ -1,11 +1,21 @@
 const mongoose = require("mongoose");
-const { LogSchema } = require("./log");
-const { ExerciseSchema } = require("./exercise");
+
+const ExerciseSchema = new mongoose.Schema({
+  description: String,
+  duration: Number,
+  date: {
+    type: Date,
+    default: () => {
+      new Date().toDateString();
+    },
+  },
+});
 
 const UserSchema = new mongoose.Schema({
   username: String,
   excercise: ExerciseSchema,
-  logs: LogSchema,
+  count: Number,
+  logs: [ExerciseSchema],
 });
 
 const UserModel = mongoose.model("User", UserSchema);

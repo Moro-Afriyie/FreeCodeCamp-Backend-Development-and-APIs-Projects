@@ -19,6 +19,22 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/views/index.html");
 });
 
+app.post("/api/users", async (req, res) => {
+  const username = req.body.username;
+  if (!username) {
+    return res.status(404).json({ error: "invalid username" });
+  }
+  User.create(
+    {
+      username: username,
+    },
+    (err, data) => {
+      console.log(data);
+      res.json({ username: data.username, id: data.id });
+    }
+  );
+});
+
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log("Your app is listening on port " + listener.address().port);
 });

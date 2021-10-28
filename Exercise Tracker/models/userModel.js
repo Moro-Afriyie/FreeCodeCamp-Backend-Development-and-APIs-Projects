@@ -1,21 +1,33 @@
 const mongoose = require("mongoose");
 
 const ExerciseSchema = new mongoose.Schema({
-  description: String,
-  duration: Number,
+  description: { type: String, default: "" },
+  duration: { type: String, default: 0 },
   date: {
     type: Date,
-    default: () => {
-      new Date().toDateString();
-    },
+    default: Date,
   },
 });
 
 const UserSchema = new mongoose.Schema({
   username: String,
-  excercise: ExerciseSchema,
-  count: Number,
-  logs: [ExerciseSchema],
+  excercise: {
+    type: ExerciseSchema,
+    default: {
+      description: "",
+      duration: 0,
+      date: new Date().toString(),
+    },
+  },
+  count: { type: Number, default: 0 },
+  logs: {
+    type: [ExerciseSchema],
+    default: {
+      description: "",
+      duration: 0,
+      date: new Date().toString(),
+    },
+  },
 });
 
 const UserModel = mongoose.model("User", UserSchema);

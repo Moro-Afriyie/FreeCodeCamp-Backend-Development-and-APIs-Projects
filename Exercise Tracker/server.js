@@ -37,6 +37,26 @@ app.post("/api/users", async (req, res) => {
   );
 });
 
+app.post("/api/users/:_id/exercises", async (req, res) => {
+  const user = req.params._id;
+  // if (!id) {
+  //   return res.status(404).json({ error: "invalid id" });
+  // }
+  if (!req.body) {
+    return res.status(404).json({ error: "invalid details" });
+  }
+  Excercise.create(
+    {
+      user: user,
+      description: req.body.description,
+      duration: req.body.duration,
+      date: req.body.date,
+    },
+    (err, data) => {
+      console.log(data);
+    }
+  );
+});
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log("Your app is listening on port " + listener.address().port);
 });

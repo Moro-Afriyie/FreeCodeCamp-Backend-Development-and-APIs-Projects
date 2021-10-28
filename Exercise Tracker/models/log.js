@@ -1,17 +1,21 @@
 const mongoose = require("mongoose");
 
 const LogSchema = new mongoose.Schema({
-  username: { type: String, required: true },
   count: { type: Number, required: true },
   log: [
     {
-      username: { type: String, required: true },
-      duration: { type: Number, required: true },
-      date: { type: Date, required: true },
+      description: String,
+      duration: Number,
+      date: {
+        type: Date,
+        default: () => {
+          new Date().toDateString();
+        },
+      },
     },
   ],
 });
 
 const LogModel = mongoose.model("Log", LogSchema);
 
-module.exports = LogModel;
+module.exports = { LogModel, LogSchema };

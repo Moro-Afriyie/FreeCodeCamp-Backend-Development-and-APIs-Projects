@@ -38,7 +38,8 @@ app.post("/api/users", async (req, res) => {
 });
 
 app.post("/api/users/:_id/exercises", async (req, res) => {
-  const user = req.params._id;
+  const { username } = await User.findById(req.params._id);
+  console.log(username);
   // if (!id) {
   //   return res.status(404).json({ error: "invalid id" });
   // }
@@ -47,7 +48,7 @@ app.post("/api/users/:_id/exercises", async (req, res) => {
   }
   Excercise.create(
     {
-      user: user,
+      userID: req.params._id,
       description: req.body.description,
       duration: req.body.duration,
       date: req.body.date,

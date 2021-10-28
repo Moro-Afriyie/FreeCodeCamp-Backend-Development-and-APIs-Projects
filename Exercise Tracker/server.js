@@ -54,7 +54,7 @@ app.post("/api/users/:_id/exercises", async (req, res) => {
       date: req.body.date,
     },
     (err, data) => {
-      console.log(data);
+      res.json(data);
     }
   );
 });

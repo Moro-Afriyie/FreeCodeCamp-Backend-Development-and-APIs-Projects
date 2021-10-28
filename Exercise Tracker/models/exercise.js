@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const ExerciseSchema = new mongoose.Schema({
   userID: { type: mongoose.Schema.Types.ObjectID, ref: "User" },
+  userName: String,
   description: String,
   duration: Number,
   date: {

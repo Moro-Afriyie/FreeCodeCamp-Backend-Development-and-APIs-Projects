@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const LogSchema = new mongoose.Schema({
+  user: { type: mongoose.Schema.types.ObjectID, ref: "User" },
   count: { type: Number, required: true },
   log: [
     {

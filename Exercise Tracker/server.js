@@ -30,7 +30,7 @@ app.post("/api/users", async (req, res) => {
     },
     (err, data) => {
       console.log(data);
-      res.json({ username: data.username, id: data.id });
+      res.json({ username: data.username, _id: data.id });
     }
   );
 });

@@ -12,6 +12,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+mongoose
+  .connect("mongodb://localhost:27017/exercise-tracker")
+  .then((res) => console.log("connected to mongoDB"))
+  .catch((err) => console.log("error"));
+
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/views/index.html");
 });

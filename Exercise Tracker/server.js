@@ -51,14 +51,14 @@ app.post("/api/users/:_id/exercises", async (req, res) => {
       username: userName.username,
       description: req.body.description,
       duration: req.body.duration,
-      date: req.body.date,
+      date: req.body.date || new Date(),
     },
     (err, data) => {
       // res.json({
       //   username: data.username,
       //   description: data.description,
       //   duration: data.duration,
-      //   date: data.date,
+      //   date: data.date.toDateString(),
       //   _id: data.userid,
       // });
       console.log(data);

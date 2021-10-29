@@ -45,14 +45,13 @@ router.post("/:_id/exercises", async (req, res) => {
       date: req.body.date || new Date(),
     },
     (err, data) => {
-      // res.json({
-      //   username: data.username,
-      //   description: data.description,
-      //   duration: data.duration,
-      //   date: data.date.toDateString(),
-      //   _id: data.userid,
-      // });
-      console.log(data);
+      res.json({
+        username: data.username,
+        description: data.description,
+        duration: data.duration,
+        date: data.date.toDateString(),
+        _id: data.userid,
+      });
     }
   );
 });

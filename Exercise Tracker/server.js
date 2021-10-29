@@ -2,8 +2,6 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
-const User = require("./models/userModel");
-const Excercise = require("./models/exercise");
 const Logs = require("./models/log");
 const users = require("./routes/users");
 require("dotenv").config();

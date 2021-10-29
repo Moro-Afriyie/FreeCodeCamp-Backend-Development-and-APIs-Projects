@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
+const User = require("../models/userModel");
 
 router.post("/", async (req, res) => {
   const username = req.body.username;
@@ -45,3 +47,5 @@ router.post("/:_id/exercises", async (req, res) => {
     }
   );
 });
+
+module.exports = router;

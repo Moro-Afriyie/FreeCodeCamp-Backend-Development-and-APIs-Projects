@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const User = require("./models/userModel");
 const Excercise = require("./models/exercise");
 const Logs = require("./models/log");
+const users = require("./routes/users");
 require("dotenv").config();
 
 app.use(cors());
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/views/index.html");
 });
 
+app.use("/api/users", users);
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log("Your app is listening on port " + listener.address().port);
 });

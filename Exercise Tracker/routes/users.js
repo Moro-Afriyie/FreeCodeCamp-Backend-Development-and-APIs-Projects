@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-router.post("/api/users", async (req, res) => {
+router.post("/", async (req, res) => {
   const username = req.body.username;
   if (!username) {
     return res.status(404).json({ error: "invalid username" });
@@ -16,7 +16,7 @@ router.post("/api/users", async (req, res) => {
   );
 });
 
-router.post("/api/users/:_id/exercises", async (req, res) => {
+router.post("/:_id/exercises", async (req, res) => {
   const userName = await User.findById(req.params._id);
   console.log(userName.username);
   // if (!id) {

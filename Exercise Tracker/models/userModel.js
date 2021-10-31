@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { ExerciseSchema } = require("./exercise");
 
 const UserSchema = new mongoose.Schema({
   username: { type: String, required: true },

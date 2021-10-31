@@ -50,16 +50,15 @@ router.post("/:_id/exercises", async (req, res, next) => {
     },
     { new: true }
   ); // returns the updated document
-  console.log(user);
-  next();
+  const logs = user.logs[user.logs.length - 1];
 
-  // res.json({
-  //   username: user.username,
-  //   description: user.logs.description,
-  //   duration: user.duration,
-  //   date: user.date.toDateString(),
-  //   _id: user.userid,
-  // });
+  res.json({
+    username: user.username,
+    description: logs.description,
+    duration: logs.duration,
+    date: logs.date.toDateString(),
+    _id: user._id,
+  });
 });
 
 //logs /api/users/:_id/logs?[from][&to][&limit]

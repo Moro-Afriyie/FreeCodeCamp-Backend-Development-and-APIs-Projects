@@ -37,6 +37,7 @@ router.post("/:_id/exercises", async (req, res) => {
   const duration = req.body.duration;
   const date = req.body.date || new Date();
   const user = await User.findByIdAndUpdate({ _id: id }, {}, { new: true });
+  console.log(user);
   // if (!id) {
   //   return res.status(404).json({ error: "invalid id" });
   // }

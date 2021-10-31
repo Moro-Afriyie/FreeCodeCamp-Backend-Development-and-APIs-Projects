@@ -29,6 +29,9 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/:_id/exercises", async (req, res) => {
+  if (!req.body) {
+    return res.status(404).json({ error: "invalid details" });
+  }
   const id = req.params._id;
   const description = req.body.description;
   const duration = req.body.duration;
@@ -37,9 +40,7 @@ router.post("/:_id/exercises", async (req, res) => {
   // if (!id) {
   //   return res.status(404).json({ error: "invalid id" });
   // }
-  if (!req.body) {
-    return res.status(404).json({ error: "invalid details" });
-  }
+
   // Excercise.create(
   //   {
   //     userid: req.params._id,

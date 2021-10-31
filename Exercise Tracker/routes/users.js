@@ -29,7 +29,7 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/:_id/exercises", async (req, res) => {
-  const userName = await User.findByIdAndUpdate(req.params._id);
+  const user = await User.findByIdAndUpdate(req.params._id);
   // if (!id) {
   //   return res.status(404).json({ error: "invalid id" });
   // }

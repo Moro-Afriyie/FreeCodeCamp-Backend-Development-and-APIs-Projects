@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/userModel");
 const Excercise = require("../models/exercise");
-const Log = require("../models/logs");
+const Log = require("../models/log");
 
 router.get("/", async (req, res) => {
   try {
@@ -36,7 +36,19 @@ router.post("/:_id/exercises", async (req, res) => {
   const description = req.body.description;
   const duration = req.body.duration;
   const date = req.body.date || new Date();
-  const user = await User.findByIdAndUpdate(id, {}, { new: true });
+  const user = await User.findByIdAndUpdate(
+    id,
+    {
+      $push: {
+        logs: {
+          description: description,
+          duration: duration,
+          date: date,
+        },
+      },
+    },
+    { new: true }
+  ); // returns the updated document
   console.log(user);
   // if (!id) {
   //   return res.status(404).json({ error: "invalid id" });

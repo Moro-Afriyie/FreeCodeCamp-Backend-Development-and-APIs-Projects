@@ -22,8 +22,8 @@ router.post("/", async (req, res) => {
     {
       username: username,
     },
-    (err, data) => {
-      res.json({ username: data.username, _id: data.id });
+    (err, user) => {
+      res.json({ username: user.username, _id: user.id });
     }
   );
 });
@@ -50,29 +50,14 @@ router.post("/:_id/exercises", async (req, res) => {
     { new: true }
   ); // returns the updated document
   console.log(user);
-  // if (!id) {
-  //   return res.status(404).json({ error: "invalid id" });
-  // }
 
-  // Excercise.create(
-  //   {
-  //     userid: req.params._id,
-  //     username: userName.username,
-  //     description: req.body.description,
-  //     duration: req.body.duration,
-  //     date: req.body.date || new Date(),
-  //   },
-  //   (err, data) => {
-  //     res.json({
-  //       username: data.username,
-  //       description: data.description,
-  //       duration: data.duration,
-  //       date: data.date.toDateString(),
-  //       _id: data.userid,
-  //     });
-  //   }
-  // );
-  // logs
+  // res.json({
+  //   username: user.username,
+  //   description: user.logs.description,
+  //   duration: user.duration,
+  //   date: user.date.toDateString(),
+  //   _id: user.userid,
+  // });
 });
 
 //logs /api/users/:_id/logs?[from][&to][&limit]

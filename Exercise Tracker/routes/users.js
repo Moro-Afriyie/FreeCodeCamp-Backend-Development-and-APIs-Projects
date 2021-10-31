@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
   );
 });
 
-router.post("/:_id/exercises", async (req, res, next) => {
+router.post("/:_id/exercises", async (req, res) => {
   if (!req.body) {
     return res.status(404).json({ error: "invalid details" });
   }

@@ -3,7 +3,7 @@ const { ExerciseSchema } = require("./exercise");
 
 const UserSchema = new mongoose.Schema({
   username: { type: String, required: true },
-  count: { type: Number, required: true, default: 0 },
+  count: { type: Number, default: 0 },
   logs: [ExerciseSchema],
 });
 

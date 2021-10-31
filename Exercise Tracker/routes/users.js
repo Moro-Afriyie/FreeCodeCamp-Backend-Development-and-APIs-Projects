@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
   );
 });
 
-router.post("/:_id/exercises", async (req, res) => {
+router.post("/:_id/exercises", async (req, res, next) => {
   if (!req.body) {
     return res.status(404).json({ error: "invalid details" });
   }
@@ -39,6 +39,7 @@ router.post("/:_id/exercises", async (req, res) => {
   const user = await User.findByIdAndUpdate(
     id,
     {
+      $inc: { count: 1 },
       $push: {
         logs: {
           description: description,
@@ -50,6 +51,7 @@ router.post("/:_id/exercises", async (req, res) => {
     { new: true }
   ); // returns the updated document
   console.log(user);
+  next();
 
   // res.json({
   //   username: user.username,

@@ -57,6 +57,7 @@ const postExercise = async (req, res) => {
   });
 };
 
+//logs /api/users/:_id/logs?[from][&to][&limit]
 const getLogs = async (req, res) => {
   try {
     const id = req.params._id;

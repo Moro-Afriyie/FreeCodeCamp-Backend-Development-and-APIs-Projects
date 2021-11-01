@@ -64,7 +64,21 @@ router.get("/:_id/logs", async (req, res) => {
   try {
     const id = req.params._id;
     const userLogs = await User.findById(id);
-    res.send(userLogs);
+    result = [];
+    userLogs.log.forEach((log) => {
+      result.push({
+        description: log.description,
+        duration: log.duration,
+        date: log.date.toDateString(),
+      });
+    });
+
+    res.json({
+      _id: userLogs._id,
+      username: userLogs.username,
+      count: userLogs.count,
+      log: result,
+    });
   } catch (error) {
     console.log(error);
   }

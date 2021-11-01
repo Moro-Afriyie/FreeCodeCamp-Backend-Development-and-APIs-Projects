@@ -62,23 +62,38 @@ router.post("/:_id/exercises", async (req, res) => {
 //logs /api/users/:_id/logs?[from][&to][&limit]
 router.get("/:_id/logs", async (req, res) => {
   try {
-    const id = req.params._id;
-    const userLogs = await User.findById(id);
-    result = [];
-    userLogs.log.forEach((log) => {
-      result.push({
-        description: log.description,
-        duration: log.duration,
-        date: log.date.toDateString(),
-      });
-    });
+    console.log(req.query);
+    const qfrom = req.query.from;
+    const qto = req.query.to;
+    const qlimit = req.query.limit;
+    const from = new Date(qfrom);
+    const to = new Date(qto);
+    // const id = req.params._id;
+    // const userLogs = await User.findById(id);
+    // result = [];
+    // userLogs.log.forEach((log) => {
+    //   result.push({
+    //     description: log.description,
+    //     duration: log.duration,
+    //     date: log.date.toDateString(),
+    //   });
+    // });
 
-    res.json({
-      _id: userLogs._id,
-      username: userLogs.username,
-      count: userLogs.count,
-      log: result,
-    });
+    // res.json({
+    //   _id: userLogs._id,
+    //   username: userLogs.username,
+    //   count: userLogs.count,
+    //   log: result,
+    // });
+
+    // query parameters
+    /*/**
+    {"_id":,"username":","from":"Fri Oct 01 2021","to":"Fri Oct 01 2021","count":0,"log":[]}
+     * var from = new Date('2014-05-18T20:00:00.000Z');
+      var to = new Date('2014-05-19T20:00:00.000Z');
+
+      db.collection.find({startTime: {$gt: from, $lt:to}});
+     */
   } catch (error) {
     console.log(error);
   }

@@ -9,4 +9,4 @@ const getUser = async (req, res) => {
   }
 };
 
-module.exports = userController;
+module.exports = getUser;

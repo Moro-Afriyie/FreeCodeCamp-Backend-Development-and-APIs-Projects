@@ -60,7 +60,7 @@ router.post("/:_id/exercises", async (req, res) => {
 });
 
 //logs /api/users/:_id/logs?[from][&to][&limit]
-router.get("/:_id", async (req, res) => {
+router.get("/:_id/logs", async (req, res) => {
   try {
   } catch (error) {
     console.log(error);

@@ -2,22 +2,9 @@ const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
 
-router.get("/", userController);
+router.get("/", userController.getUsers);
 
-router.post("/", async (req, res) => {
-  const username = req.body.username;
-  if (!username) {
-    return res.status(404).json({ error: "invalid username" });
-  }
-  User.create(
-    {
-      username: username,
-    },
-    (err, user) => {
-      res.json({ username: user.username, _id: user.id });
-    }
-  );
-});
+router.post("/", userController.postUser);
 
 router.post("/:_id/exercises", async (req, res) => {
   if (!req.body) {

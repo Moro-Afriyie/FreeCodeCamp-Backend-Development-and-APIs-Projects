@@ -62,12 +62,44 @@ router.post("/:_id/exercises", async (req, res) => {
 //logs /api/users/:_id/logs?[from][&to][&limit]
 router.get("/:_id/logs", async (req, res) => {
   try {
-    console.log(req.query);
+    const id = req.params._id;
+    // console.log(req.query);
+    //http://localhost:8000/api/users/617fb79c79d2c4ee81de2aec/logs?from=2021-10-01&to=2021-11-30&limit=4
     const qfrom = req.query.from;
     const qto = req.query.to;
     const qlimit = req.query.limit;
     const from = new Date(qfrom);
     const to = new Date(qto);
+    console.log("query params: ", req.query);
+    console.log("from : ", from);
+    console.log("new: ", to);
+    // User.findById(id, {
+    //   log: { $elemMatch: { date: { $gte: from, $lt: to } } },
+    // }).exec((err, data) => {
+    //   if (err) console.log(err);
+    //   console.log(data);
+    // });
+    // const logs = await User.findById(id).find({
+    //   log: {
+    //     date: {
+    //       $gte: from,
+    //       $lt: to,
+    //     },
+    //   },
+    // });
+    // const userLogs = await User.findById(id, {
+    //   log: {
+    //     date: {
+    //       $gte: from,
+    //       $lt: to,
+    //     },
+    //   },
+    // });
+    // console.log(userLogs);
+    // userLogs.log.filter(log=>{
+    //   if(log.date)
+    // })
+    // console.log(logs);
     // const id = req.params._id;
     // const userLogs = await User.findById(id);
     // result = [];

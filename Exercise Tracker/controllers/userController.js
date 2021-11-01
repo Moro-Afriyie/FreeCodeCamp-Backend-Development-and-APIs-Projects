@@ -78,6 +78,12 @@ const getLogs = async (req, res) => {
     //   if (err) console.log(err);
     //   console.log(data);
     // });
+    // User.findById(id, {
+    //   log: { date: { $gte: from, $lt: to } },
+    // }).exec((err, data) => {
+    //   if (err) console.log(err);
+    //   console.log(data);
+    // });
 
     // const id = req.params._id;
     // const userLogs = await User.findById(id);

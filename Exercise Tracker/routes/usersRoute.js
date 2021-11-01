@@ -73,33 +73,14 @@ router.get("/:_id/logs", async (req, res) => {
     console.log("query params: ", req.query);
     console.log("from : ", from);
     console.log("new: ", to);
+    //http://localhost:8000/api/users/61801f68f8747dcfa51a10e4/logs?from=2021-11-04&to=2021-11-05&limit=4
     // User.findById(id, {
     //   log: { $elemMatch: { date: { $gte: from, $lt: to } } },
     // }).exec((err, data) => {
     //   if (err) console.log(err);
     //   console.log(data);
     // });
-    // const logs = await User.findById(id).find({
-    //   log: {
-    //     date: {
-    //       $gte: from,
-    //       $lt: to,
-    //     },
-    //   },
-    // });
-    // const userLogs = await User.findById(id, {
-    //   log: {
-    //     date: {
-    //       $gte: from,
-    //       $lt: to,
-    //     },
-    //   },
-    // });
-    // console.log(userLogs);
-    // userLogs.log.filter(log=>{
-    //   if(log.date)
-    // })
-    // console.log(logs);
+
     // const id = req.params._id;
     // const userLogs = await User.findById(id);
     // result = [];

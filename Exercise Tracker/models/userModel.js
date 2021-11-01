@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const UserSchema = new mongoose.Schema({
   username: { type: String, required: true },
   count: { type: Number, default: 0 },
-  logs: [
+  log: [
     {
       description: String,
       duration: Number,

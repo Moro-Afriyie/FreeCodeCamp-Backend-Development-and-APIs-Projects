@@ -39,7 +39,7 @@ router.post("/:_id/exercises", async (req, res) => {
     {
       $inc: { count: 1 },
       $push: {
-        logs: {
+        log: {
           description: description,
           duration: duration,
           date: date,
@@ -48,7 +48,7 @@ router.post("/:_id/exercises", async (req, res) => {
     },
     { new: true }
   ); // returns the updated document
-  const logs = user.logs[user.logs.length - 1];
+  const logs = user.log[user.log.length - 1];
 
   res.json({
     username: user.username,
@@ -64,7 +64,7 @@ router.get("/:_id/logs", async (req, res) => {
   try {
     const id = req.params._id;
     const userLogs = await User.findById(id);
-    console.log(userLogs);
+    res.send(userLogs);
   } catch (error) {
     console.log(error);
   }

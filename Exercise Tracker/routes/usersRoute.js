@@ -62,6 +62,9 @@ router.post("/:_id/exercises", async (req, res) => {
 //logs /api/users/:_id/logs?[from][&to][&limit]
 router.get("/:_id/logs", async (req, res) => {
   try {
+    const id = req.params._id;
+    const userLogs = await User.findById(id);
+    console.log(userLogs);
   } catch (error) {
     console.log(error);
   }

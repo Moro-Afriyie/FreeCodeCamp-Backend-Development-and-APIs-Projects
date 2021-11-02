@@ -114,23 +114,22 @@ const getLogs = async (req, res, next) => {
         },
       },
     ]);
-    res.json(userLogs);
-    // const userLogs = await User.findById(id);
-    // result = [];
-    // userLogs.log.forEach((log) => {
-    //   result.push({
-    //     description: log.description,
-    //     duration: log.duration,
-    //     date: log.date.toDateString(),
-    //   });
-    // });
 
-    // res.json({
-    //   _id: userLogs._id,
-    //   username: userLogs.username,
-    //   count: userLogs.count,
-    //   log: result,
-    // });
+    result = [];
+    userLogs[0].log.forEach((log) => {
+      result.push({
+        description: log.description,
+        duration: log.duration,
+        date: log.date.toDateString(),
+      });
+    });
+
+    res.json({
+      _id: userLogs[0]._id,
+      username: userLogs[0].username,
+      count: userLogs[0].count,
+      log: result,
+    });
   } catch (error) {
     console.log(error);
   }

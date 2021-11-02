@@ -1,4 +1,5 @@
 const User = require("../models/userModel");
+const mongoose = require("mongoose");
 
 const getUsers = async (req, res) => {
   try {
@@ -31,7 +32,7 @@ const postExercise = async (req, res) => {
   const id = req.params._id;
   const description = req.body.description;
   const duration = req.body.duration;
-  const date = req.body.date || new Date();
+  const date = req.body.date || new Date().toISOString();
   const user = await User.findByIdAndUpdate(
     id,
     {
@@ -58,7 +59,7 @@ const postExercise = async (req, res) => {
 };
 
 //logs /api/users/:_id/logs?[from][&to][&limit]
-const getLogs = async (req, res) => {
+const getLogs = async (req, res, next) => {
   try {
     const id = req.params._id;
     // console.log(req.query);
@@ -84,6 +85,44 @@ const getLogs = async (req, res) => {
     //   if (err) console.log(err);
     //   console.log(data);
     // });
+    User.aggregate([
+      {
+        $match: {
+          _id: mongoose.Types.ObjectId(id),
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          username: 1,
+          log: {
+            $slice: [
+              {
+                $filter: {
+                  input: "$log",
+                  as: "log",
+                  cond: {
+                    $and: [
+                      { $gte: ["$$log.date", from] },
+                      { $lte: ["$$log.date", to] },
+                    ],
+                  },
+                },
+              },
+              parseInt(qlimit),
+            ],
+          },
+        },
+      },
+    ])
+      .then((log) => {
+        log[0].count = log[0].log.length;
+
+        res.json(log);
+      })
+      .catch((err) => {
+        next(err);
+      });
 
     // const id = req.params._id;
     // const userLogs = await User.findById(id);

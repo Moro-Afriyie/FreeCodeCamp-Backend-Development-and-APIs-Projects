@@ -62,30 +62,22 @@ const postExercise = async (req, res) => {
 const getLogs = async (req, res, next) => {
   try {
     const id = req.params._id;
-    // console.log(req.query);
-    //http://localhost:8000/api/users/617fb79c79d2c4ee81de2aec/logs?from=2021-10-01&to=2021-11-30&limit=4
-    const qfrom = req.query.from;
-    const qto = req.query.to;
-    const qlimit = req.query.limit;
-    const from = new Date(qfrom);
-    const to = new Date(qto);
-    console.log("query params: ", req.query);
-    console.log("from : ", from);
-    console.log("new: ", to);
-    //http://localhost:8000/api/users/61801f68f8747dcfa51a10e4/logs?from=2021-11-04&to=2021-11-05&limit=4
-    // User.findById(id, {
-    //   log: { $elemMatch: { date: { $gte: from, $lt: to } } },
-    // }).exec((err, data) => {
-    //   if (err) console.log(err);
-    //   console.log(data);
-    // });
-    // User.findById(id, {
-    //   log: { date: { $gte: from, $lt: to } },
-    // }).exec((err, data) => {
-    //   if (err) console.log(err);
-    //   console.log(data);
-    // });
-    User.aggregate([
+    let from = req.query.from;
+    let to = req.query.to;
+    let limit = req.query.limit;
+    if (from) {
+      from = new Date(from);
+
+      if (to) to = new Date(to);
+      else to = new Date();
+    } else {
+      from = new Date(0);
+      to = new Date("2999-12-31");
+    }
+
+    if (!limit || limit == 0) limit = 9999;
+    else limit = parseInt(limit);
+    const userLogs = await User.aggregate([
       {
         $match: {
           _id: mongoose.Types.ObjectId(id),
@@ -95,6 +87,7 @@ const getLogs = async (req, res, next) => {
         $project: {
           _id: 1,
           username: 1,
+          count: 1,
           log: {
             $slice: [
               {
@@ -109,22 +102,13 @@ const getLogs = async (req, res, next) => {
                   },
                 },
               },
-              parseInt(qlimit),
+              limit,
             ],
           },
         },
       },
-    ])
-      .then((log) => {
-        log[0].count = log[0].log.length;
-
-        res.json(log);
-      })
-      .catch((err) => {
-        next(err);
-      });
-
-    // const id = req.params._id;
+    ]);
+    res.json(userLogs);
     // const userLogs = await User.findById(id);
     // result = [];
     // userLogs.log.forEach((log) => {
@@ -141,15 +125,6 @@ const getLogs = async (req, res, next) => {
     //   count: userLogs.count,
     //   log: result,
     // });
-
-    // query parameters
-    /*/**
-    {"_id":,"username":","from":"Fri Oct 01 2021","to":"Fri Oct 01 2021","count":0,"log":[]}
-     * var from = new Date('2014-05-18T20:00:00.000Z');
-      var to = new Date('2014-05-19T20:00:00.000Z');
-
-      db.collection.find({startTime: {$gt: from, $lt:to}});
-     */
   } catch (error) {
     console.log(error);
   }

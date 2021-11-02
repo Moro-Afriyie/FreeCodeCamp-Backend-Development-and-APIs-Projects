@@ -68,15 +68,21 @@ const getLogs = async (req, res, next) => {
     if (from) {
       from = new Date(from);
 
-      if (to) to = new Date(to);
-      else to = new Date();
+      if (to) {
+        to = new Date(to);
+      } else {
+        to = new Date();
+      }
     } else {
       from = new Date(0);
       to = new Date("2999-12-31");
     }
 
-    if (!limit || limit == 0) limit = 9999;
-    else limit = parseInt(limit);
+    if (!limit || limit == 0) {
+      limit = 9999;
+    } else {
+      limit = parseInt(limit);
+    }
     const userLogs = await User.aggregate([
       {
         $match: {

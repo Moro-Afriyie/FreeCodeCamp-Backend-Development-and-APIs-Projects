@@ -13,8 +13,20 @@ const getUsers = async (req, res) => {
 
 const postUser = async (req, res) => {
   const username = req.body.username;
-  if (!username) {
-    return res.status(404).json({ error: "invalid username" });
+  const schema = Joi.object({
+    username: Joi.string().required(),
+    // password: Joi.string()
+    //     .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
+  });
+  console.log("error: ", schema.validate({ username }).error);
+  console.log(
+    "message: ",
+    schema.validate({ username }).error.details[0].message
+  );
+  if (schema.validate({ username: username }).error) {
+    return res
+      .status(404)
+      .json({ error: schema.validate({ username }).error.details[0].message });
   }
   User.create(
     {

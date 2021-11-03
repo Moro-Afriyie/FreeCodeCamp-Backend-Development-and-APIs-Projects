@@ -18,15 +18,9 @@ const postUser = async (req, res) => {
     // password: Joi.string()
     //     .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
   });
-  console.log("error: ", schema.validate({ username }).error);
-  console.log(
-    "message: ",
-    schema.validate({ username }).error.details[0].message
-  );
-  if (schema.validate({ username: username }).error) {
-    return res
-      .status(404)
-      .json({ error: schema.validate({ username }).error.details[0].message });
+  const result = schema.validate({ username: username });
+  if (result.error) {
+    return res.status(404).send(result.error.details[0].message);
   }
   User.create(
     {

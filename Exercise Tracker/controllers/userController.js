@@ -36,6 +36,31 @@ const postExercise = async (req, res) => {
   if (!req.body) {
     return res.status(404).json({ error: "invalid details" });
   }
+  const schema = Joi.object({
+    id: Joi.string().required(),
+    description: Joi.string().required(),
+    duration: Joi.number().required(),
+    date: Joi.string().pattern(
+      new RegExp("^d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$")
+    ),
+  });
+  const result = schema.validate({
+    id: req.params._id,
+    description: req.body.description,
+    duration: req.body.duration,
+    date: req.body.date,
+  });
+  console.log(result.error.details[0].path[0]);
+  if (result.error) {
+    if (result.error.details[0].path[0] === "date") {
+      return res
+        .status(404)
+        .send(
+          `date with value ${req.body.date} fails to match the required pattern: yyyy-mm-dd`
+        );
+    }
+    return res.status(404).send(result.error.details[0].message);
+  }
   const id = req.params._id;
   const description = req.body.description;
   const duration = req.body.duration;

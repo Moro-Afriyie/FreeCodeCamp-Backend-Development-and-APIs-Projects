@@ -20,7 +20,12 @@ const postUser = async (req, res) => {
   const result = schema.validate({ username: username });
 
   if (result.error) {
-    return res.status(401).send(result.error.details[0].message);
+    return res.status(400).send(result.error.details[0].message);
+  }
+  const checkUserExists = await User.findOne({ username: username });
+
+  if (checkUserExists) {
+    return res.status(409).send("username already exits");
   }
 
   User.create(
@@ -35,7 +40,7 @@ const postUser = async (req, res) => {
 
 const postExercise = async (req, res) => {
   if (!req.body) {
-    return res.status(401).json({ error: "invalid details" });
+    return res.status(400).json({ error: "invalid details" });
   }
 
   const schema = Joi.object({
@@ -51,14 +56,14 @@ const postExercise = async (req, res) => {
   });
 
   if (result.error) {
-    return res.status(401).send(result.error.details[0].message);
+    return res.status(400).send(result.error.details[0].message);
   }
   if (
     req.body.date !== "" &&
     !/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/.test(req.body.date)
   ) {
     return res
-      .status(401)
+      .status(400)
       .send(
         `date with value ${req.body.date} fails to match the required pattern: yyyy-mm-dd`
       );

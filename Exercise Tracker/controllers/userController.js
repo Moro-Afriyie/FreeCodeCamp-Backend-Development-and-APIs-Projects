@@ -74,6 +74,7 @@ const postExercise = async (req, res) => {
   const description = req.body.description;
   const duration = req.body.duration;
   const date = req.body.date || new Date().toISOString();
+  // check if there is a user with the id
   try {
     const checkValidId = await User.findById(id);
     if (!checkValidId) {

@@ -2,7 +2,7 @@ var express = require("express");
 var cors = require("cors");
 require("dotenv").config();
 const multer = require("multer");
-const upload = multer({ dest: "./uploads" });
+const upload = multer({ dest: "./uploads" }); // dest: refers to the destination where the file will be uploaded
 
 var app = express();
 
@@ -13,18 +13,14 @@ app.get("/", function (req, res) {
   res.sendFile(process.cwd() + "/views/index.html");
 });
 
-app.post(
-  "/api/fileanalyse",
-  upload.single("upfile"),
-  function (req, res, next) {
-    console.log(req.file, req.body);
-    res.status(200).json({
-      name: req.file.originalname,
-      type: req.file.mimetype,
-      size: req.file.size,
-    });
-  }
-);
+// upload.single("name") must always contain the name attribute on the html input tag
+app.post("/api/fileanalyse", upload.single("upfile"), (req, res) => {
+  res.status(200).json({
+    name: req.file.originalname,
+    type: req.file.mimetype,
+    size: req.file.size,
+  });
+});
 
 const port = process.env.PORT || 8000;
 app.listen(port, function () {

@@ -20,7 +20,7 @@ const postUser = async (req, res) => {
   const result = schema.validate({ username: username });
 
   if (result.error) {
-    return res.status(404).send(result.error.details[0].message);
+    return res.status(401).send(result.error.details[0].message);
   }
 
   User.create(
@@ -35,41 +35,30 @@ const postUser = async (req, res) => {
 
 const postExercise = async (req, res) => {
   if (!req.body) {
-    return res.status(404).json({ error: "invalid details" });
+    return res.status(401).json({ error: "invalid details" });
   }
 
   const schema = Joi.object({
     id: Joi.string().required(),
     description: Joi.string().required(),
     duration: Joi.number().required(),
-    // date: Joi.string().pattern(
-    //   new RegExp("^d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$")
-    // ),
   });
 
   const result = schema.validate({
     id: req.params._id,
     description: req.body.description,
     duration: req.body.duration,
-    // date: req.body.date,
   });
 
   if (result.error) {
-    // if (result.error.details[0].path[0] === "date") {
-    //   return res
-    //     .status(404)
-    //     .send(
-    //       `date with value ${req.body.date} fails to match the required pattern: yyyy-mm-dd`
-    //     );
-    // }
-    return res.status(404).send(result.error.details[0].message);
+    return res.status(401).send(result.error.details[0].message);
   }
   if (
     req.body.date !== "" &&
     !/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/.test(req.body.date)
   ) {
     return res
-      .status(404)
+      .status(401)
       .send(
         `date with value ${req.body.date} fails to match the required pattern: yyyy-mm-dd`
       );

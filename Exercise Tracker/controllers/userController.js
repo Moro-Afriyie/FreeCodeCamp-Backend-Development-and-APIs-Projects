@@ -22,6 +22,7 @@ const postUser = async (req, res) => {
   if (result.error) {
     return res.status(400).send(result.error.details[0].message);
   }
+
   const checkUserExists = await User.findOne({ username: username });
 
   if (checkUserExists) {
@@ -58,6 +59,7 @@ const postExercise = async (req, res) => {
   if (result.error) {
     return res.status(400).send(result.error.details[0].message);
   }
+
   if (
     req.body.date !== "" &&
     !/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/.test(req.body.date)
@@ -72,6 +74,14 @@ const postExercise = async (req, res) => {
   const description = req.body.description;
   const duration = req.body.duration;
   const date = req.body.date || new Date().toISOString();
+  try {
+    const checkValidId = await User.findById(id);
+    if (!checkValidId) {
+      return res.status(400).send({ error: "invalid user" });
+    }
+  } catch (err) {
+    return res.status(400).send({ error: "invalid Id" });
+  }
   const user = await User.findByIdAndUpdate(
     id,
     {

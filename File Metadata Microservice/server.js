@@ -18,13 +18,11 @@ app.post(
   upload.single("upfile"),
   function (req, res, next) {
     console.log(req.file, req.body);
-    res
-      .status(200)
-      .json({
-        name: req.file.originalname,
-        type: req.file.mimetype,
-        path: req.file.path,
-      });
+    res.status(200).json({
+      name: req.file.originalname,
+      type: req.file.mimetype,
+      size: req.file.size,
+    });
   }
 );
 
